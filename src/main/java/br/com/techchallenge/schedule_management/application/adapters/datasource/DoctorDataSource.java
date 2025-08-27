@@ -1,0 +1,16 @@
+package br.com.techchallenge.schedule_management.application.adapters.datasource;
+
+import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import org.springframework.data.domain.Page;
+
+public interface DoctorDataSource {
+
+    Page<DoctorDTO> findDoctors(Integer page, Integer size);
+    DoctorDTO findDoctorById(Long id);
+    DoctorDTO createDoctor(CreateDoctorDTO createDoctorDTO);
+    DoctorDTO updateDoctor(Long id, UpdateDoctorDTO updateDoctorDTO);
+    void deleteDoctorById(Long id);
+
+}
