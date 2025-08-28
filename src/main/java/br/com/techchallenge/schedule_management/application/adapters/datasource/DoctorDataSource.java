@@ -5,12 +5,17 @@ import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.Optional;
+
 public interface DoctorDataSource {
 
     Page<DoctorDTO> findDoctors(Integer page, Integer size);
-    DoctorDTO findDoctorById(Long id);
+    Optional<DoctorDTO> findDoctorById(Long id);
     DoctorDTO createDoctor(CreateDoctorDTO createDoctorDTO);
     DoctorDTO updateDoctor(Long id, UpdateDoctorDTO updateDoctorDTO);
     void deleteDoctorById(Long id);
-
+    Optional<DoctorDTO> findDoctorByEmail(String email);
+    Optional<DoctorDTO> findDoctorByCrm(String crm);
+    Optional<DoctorDTO> findDoctorByCpf(String cpf);
+    Optional<DoctorDTO> findDoctorByPhone(String phone);
 }

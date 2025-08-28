@@ -22,62 +22,94 @@ public class DoctorGatewayImpl implements DoctorGateway {
 
     @Override
     public Optional<DoctorDomain> getDoctorById(Long doctorId) {
-        return Optional.empty();
+        var doctorOp = doctorDataSource.findDoctorById(doctorId);
+
+        return doctorOp.map(DoctorDomain::new);
     }
 
     @Override
     public DoctorDomain createDoctor(CreateDoctorDTO createDoctorDTO) {
-        return null;
+        var createdDoctor = doctorDataSource.createDoctor(createDoctorDTO);
+        return new DoctorDomain(createdDoctor);
     }
 
     @Override
     public DoctorDomain updateDoctor(Long doctorId, UpdateDoctorDTO updateDoctorDTO) {
-        return null;
+        var updatedDoctor = doctorDataSource.updateDoctor(doctorId, updateDoctorDTO);
+        return new DoctorDomain(updatedDoctor);
     }
 
     @Override
     public void deleteDoctorById(Long doctorId) {
-
+        doctorDataSource.deleteDoctorById(doctorId);
     }
 
     @Override
-    public void isEmailAlreadyExists(String email) {
-
+    public boolean isEmailAlreadyExists(String email) {
+        var doctor = doctorDataSource.findDoctorByEmail(email);
+        return doctor.isPresent();
     }
 
     @Override
-    public void isPhoneAlreadyExists(String phone) {
-
+    public boolean isPhoneAlreadyExists(String phone) {
+        var doctor = doctorDataSource.findDoctorByPhone(phone);
+        return doctor.isPresent();
     }
 
     @Override
-    public void isCpfAlreadyExists(String cpf) {
-
+    public boolean isCpfAlreadyExists(String cpf) {
+        var doctor = doctorDataSource.findDoctorByCpf(cpf);
+        return doctor.isPresent();
     }
 
     @Override
-    public void isCrmAlreadyExists(String crm) {
-
+    public boolean isCrmAlreadyExists(String crm) {
+        var doctor = doctorDataSource.findDoctorByCrm(crm);
+        return doctor.isPresent();
     }
 
     @Override
-    public void isEmailAlreadyExistsWithOtherDoctor(Long doctorId, String email) {
+    public boolean isEmailAlreadyExistsWithOtherDoctor(Long doctorId, String email) {
+        var doctor = doctorDataSource.findDoctorByEmail(email);
 
+        var isThisDoctorsEmail = doctor
+                .map(doctorDTO -> doctorDTO.id().equals(doctorId))
+                .orElse(false);
+
+        return !isThisDoctorsEmail;
     }
 
     @Override
-    public void isPhoneAlreadyExistsWithOtherDoctor(Long doctorId, String phone) {
+    public boolean isPhoneAlreadyExistsWithOtherDoctor(Long doctorId, String phone) {
+        var doctor = doctorDataSource.findDoctorByPhone(phone);
 
+        var isThisDoctorsPhone = doctor
+                .map(doctorDTO -> doctorDTO.id().equals(doctorId))
+                .orElse(false);
+
+        return !isThisDoctorsPhone;
     }
 
     @Override
-    public void isCpfAlreadyExistsWithOtherDoctor(Long doctorId, String cpf) {
+    public boolean isCpfAlreadyExistsWithOtherDoctor(Long doctorId, String cpf) {
+        var doctor = doctorDataSource.findDoctorByCpf(cpf);
 
+        var isThisDoctorsCpf = doctor
+                .map(doctorDTO -> doctorDTO.id().equals(doctorId))
+                .orElse(false);
+
+        return !isThisDoctorsCpf;
     }
 
     @Override
-    public void isCrmAlreadyExistsWithOtherDoctor(Long doctorId, String crm) {
+    public boolean isCrmAlreadyExistsWithOtherDoctor(Long doctorId, String crm) {
+        var doctor = doctorDataSource.findDoctorByCrm(crm);
 
+        var isThisDoctorsCrm = doctor
+                .map(doctorDTO -> doctorDTO.id().equals(doctorId))
+                .orElse(false);
+
+        return !isThisDoctorsCrm;
     }
 
 }

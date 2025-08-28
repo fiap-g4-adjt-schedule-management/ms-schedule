@@ -6,7 +6,7 @@ import br.com.techchallenge.schedule_management.application.domain.usecase.Docto
 import br.com.techchallenge.schedule_management.application.domain.usecase.Doctor.UpdateDoctorCase;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
-import br.com.techchallenge.schedule_management.application.exceptions.Doctor.DoctorNotFoundException;
+import br.com.techchallenge.schedule_management.application.exceptions.Doctor.*;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -25,9 +25,34 @@ public class UpdateDoctorCaseImpl implements UpdateDoctorCase {
     }
 
     private void isDoctorValid(Long doctorId, UpdateDoctorDTO updateDoctorDTO) {
-        doctorGateway.isEmailAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.email());
-        doctorGateway.isPhoneAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.phone());
-        doctorGateway.isCrmAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.crm());
-        doctorGateway.isCpfAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.cpf());
+        this.isEmailAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.email());
+        this.isPhoneAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.phone());
+        this.isCrmAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.crm());
+        this.isCpfAlreadyExistsWithOtherDoctor(doctorId, updateDoctorDTO.cpf());
     }
+
+    private void isEmailAlreadyExistsWithOtherDoctor(Long doctorId, String email) {
+        if (doctorGateway.isEmailAlreadyExistsWithOtherDoctor(doctorId, email)) {
+            throw new DoctorEmailAlreadyExistsException("Email already exists");
+        }
+    }
+
+    private void isPhoneAlreadyExistsWithOtherDoctor(Long doctorId, String phone) {
+        if (doctorGateway.isPhoneAlreadyExistsWithOtherDoctor(doctorId, phone)) {
+            throw new DoctorPhoneAlreadyExistsException("Phone already exists");
+        }
+    }
+
+    private void isCrmAlreadyExistsWithOtherDoctor(Long doctorId, String crm) {
+        if (doctorGateway.isCrmAlreadyExistsWithOtherDoctor(doctorId, crm)) {
+            throw new DoctorCrmAlreadyExistsException("CRM already exists");
+        }
+    }
+
+    private void isCpfAlreadyExistsWithOtherDoctor(Long doctorId, String cpf) {
+        if (doctorGateway.isCpfAlreadyExistsWithOtherDoctor(doctorId, cpf)) {
+            throw new DoctorCpfAlreadyExistsException("CPF already exists");
+        }
+    }
+
 }

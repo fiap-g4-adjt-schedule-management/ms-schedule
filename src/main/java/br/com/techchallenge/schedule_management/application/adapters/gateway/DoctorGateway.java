@@ -14,13 +14,13 @@ public interface DoctorGateway {
     DoctorDomain createDoctor(CreateDoctorDTO createDoctorDTO);
     DoctorDomain updateDoctor(Long doctorId, UpdateDoctorDTO updateDoctorDTO);
     void deleteDoctorById(Long doctorId);
-    void isEmailAlreadyExists(String email);
-    void isPhoneAlreadyExists(String phone);
-    void isCpfAlreadyExists(String cpf);
-    void isCrmAlreadyExists(String crm);
-    void isEmailAlreadyExistsWithOtherDoctor(Long doctorId, String email);
-    void isPhoneAlreadyExistsWithOtherDoctor(Long doctorId, String phone);
-    void isCpfAlreadyExistsWithOtherDoctor(Long doctorId, String cpf);
-    void isCrmAlreadyExistsWithOtherDoctor(Long doctorId, String crm);
+    boolean isEmailAlreadyExists(String email);
+    boolean isPhoneAlreadyExists(String phone);
+    boolean isCpfAlreadyExists(String cpf);
+    boolean isCrmAlreadyExists(String crm);
+    boolean isEmailAlreadyExistsWithOtherDoctor(Long doctorId, String email);
+    boolean isPhoneAlreadyExistsWithOtherDoctor(Long doctorId, String phone);
+    boolean isCpfAlreadyExistsWithOtherDoctor(Long doctorId, String cpf);
+    boolean isCrmAlreadyExistsWithOtherDoctor(Long doctorId, String crm);
 
 }
