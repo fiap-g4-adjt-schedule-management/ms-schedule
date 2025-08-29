@@ -1,17 +1,13 @@
 package br.com.techchallenge.schedule_management.infrastructure.doctor.datasource;
 
 import br.com.techchallenge.schedule_management.application.adapters.datasource.DoctorDataSource;
-import br.com.techchallenge.schedule_management.application.dto.Address.AddressDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
-import br.com.techchallenge.schedule_management.application.dto.Speciality.SpecialityDTO;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.entity.Doctor;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.repository.DoctorRepository;
-import br.com.techchallenge.schedule_management.infrastructure.speciality.repository.SpecialityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
