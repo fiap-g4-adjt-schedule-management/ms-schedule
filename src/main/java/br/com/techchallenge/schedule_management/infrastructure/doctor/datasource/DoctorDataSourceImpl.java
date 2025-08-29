@@ -40,7 +40,7 @@ public class DoctorDataSourceImpl implements DoctorDataSource {
     public DoctorDTO createDoctor(CreateDoctorDTO createDoctorDTO) {
         var doctor = new Doctor(createDoctorDTO);
 
-        doctorRepository.save(doctor);
+        doctor = doctorRepository.save(doctor);
 
         return new DoctorDTO(doctor);
     }
@@ -54,7 +54,7 @@ public class DoctorDataSourceImpl implements DoctorDataSource {
         var doctor = doctorOp.get();
         doctor.updateDoctor(updateDoctorDTO);
 
-        doctorRepository.save(doctor);
+        doctor = doctorRepository.save(doctor);
 
         return new DoctorDTO(doctor);
     }

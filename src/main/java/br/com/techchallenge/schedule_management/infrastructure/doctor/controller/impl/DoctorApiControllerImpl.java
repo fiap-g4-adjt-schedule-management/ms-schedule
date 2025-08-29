@@ -21,6 +21,7 @@ public class DoctorApiControllerImpl implements DoctorApiController {
     @Override
     public PaginationDomain<DoctorDTO> getDoctors(Integer page, Integer size) {
         var doctorController = new DoctorControllerImpl(doctorDataSource);
+
         return doctorController.getDoctors(page, size);
     }
 
@@ -33,18 +34,21 @@ public class DoctorApiControllerImpl implements DoctorApiController {
     @Override
     public DoctorDTO createDoctor(CreateDoctorDTO createDoctorDTO) {
         var doctorController = new DoctorControllerImpl(doctorDataSource);
+
         return doctorController.createDoctor(createDoctorDTO);
     }
 
     @Override
     public DoctorDTO updateDoctor(Long doctorId, UpdateDoctorDTO updateDoctorDTO) {
         var doctorController = new DoctorControllerImpl(doctorDataSource);
+
         return doctorController.updateDoctor(doctorId, updateDoctorDTO);
     }
 
     @Override
     public void deleteDoctor(Long doctorId) {
         var doctorController = new DoctorControllerImpl(doctorDataSource);
+
         doctorController.deleteDoctorById(doctorId);
     }
 

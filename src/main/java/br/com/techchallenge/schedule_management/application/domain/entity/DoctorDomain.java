@@ -23,16 +23,9 @@ public class DoctorDomain {
         this.cpf = doctorDTO.cpf();
         this.phone = doctorDTO.phone();
         this.email = doctorDTO.email();
+        this.speciality = new SpecialityDomain(doctorDTO.speciality());
         this.crm = doctorDTO.crm();
-        this.address = new AddressDomain(
-                doctorDTO.address().zipCode(),
-                doctorDTO.address().street(),
-                doctorDTO.address().number(),
-                doctorDTO.address().complement(),
-                doctorDTO.address().neighborhood(),
-                doctorDTO.address().city(),
-                doctorDTO.address().state()
-        );
+        this.address = new AddressDomain(doctorDTO.address());
     }
 
 }
