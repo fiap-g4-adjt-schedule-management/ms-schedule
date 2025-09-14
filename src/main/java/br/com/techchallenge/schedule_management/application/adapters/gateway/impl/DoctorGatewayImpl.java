@@ -3,9 +3,9 @@ package br.com.techchallenge.schedule_management.application.adapters.gateway.im
 import br.com.techchallenge.schedule_management.application.adapters.datasource.DoctorDataSource;
 import br.com.techchallenge.schedule_management.application.adapters.gateway.DoctorGateway;
 import br.com.techchallenge.schedule_management.application.domain.entity.DoctorDomain;
-import br.com.techchallenge.schedule_management.application.domain.entity.PaginationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import lombok.AllArgsConstructor;
 
 import java.util.Optional;
@@ -16,7 +16,7 @@ public class DoctorGatewayImpl implements DoctorGateway {
     private final DoctorDataSource doctorDataSource;
 
     @Override
-    public PaginationDomain<DoctorDomain> getDoctors(Integer page, Integer size) {
+    public PageResult<DoctorDomain> getDoctors(Integer page, Integer size) {
         return null;
     }
 

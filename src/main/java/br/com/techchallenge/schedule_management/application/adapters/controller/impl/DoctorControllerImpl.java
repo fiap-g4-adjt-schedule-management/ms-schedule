@@ -3,11 +3,11 @@ package br.com.techchallenge.schedule_management.application.adapters.controller
 import br.com.techchallenge.schedule_management.application.adapters.controller.DoctorController;
 import br.com.techchallenge.schedule_management.application.adapters.datasource.DoctorDataSource;
 import br.com.techchallenge.schedule_management.application.adapters.gateway.impl.DoctorGatewayImpl;
-import br.com.techchallenge.schedule_management.application.domain.entity.PaginationDomain;
 import br.com.techchallenge.schedule_management.application.domain.usecase.Doctor.impl.*;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -16,13 +16,13 @@ public class DoctorControllerImpl implements DoctorController {
     private final DoctorDataSource doctorDataSource;
 
     @Override
-    public PaginationDomain<DoctorDTO> getDoctors(Integer page, Integer pageSize) {
+    public PageResult<DoctorDTO> getDoctors(Integer page, Integer pageSize) {
         var doctorGateway = new DoctorGatewayImpl(doctorDataSource);
         var getDoctorsCase = new GetDoctorsCaseImpl(doctorGateway);
 
         var doctorsPage = getDoctorsCase.run(page, pageSize);
 
-        return new PaginationDomain<>(
+        return new PageResult<>(
                 doctorsPage.getItems().stream().map(DoctorDTO::new).toList(),
                 doctorsPage.getPage(),
                 doctorsPage.getSize(),
