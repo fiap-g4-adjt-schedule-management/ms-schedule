@@ -17,7 +17,14 @@ public class DoctorGatewayImpl implements DoctorGateway {
 
     @Override
     public PageResult<DoctorDomain> getDoctors(Integer page, Integer size) {
-        return null;
+        var doctorsDTOPage = doctorDataSource.findDoctors(page, size);
+
+        return new PageResult<>(
+                doctorsDTOPage.getItems().stream().map(DoctorDomain::new).toList(),
+                doctorsDTOPage.getPage(),
+                doctorsDTOPage.getSize(),
+                doctorsDTOPage.getTotalItems()
+        );
     }
 
     @Override
@@ -30,12 +37,14 @@ public class DoctorGatewayImpl implements DoctorGateway {
     @Override
     public DoctorDomain createDoctor(CreateDoctorDTO createDoctorDTO) {
         var createdDoctor = doctorDataSource.createDoctor(createDoctorDTO);
+
         return new DoctorDomain(createdDoctor);
     }
 
     @Override
     public DoctorDomain updateDoctor(Long doctorId, UpdateDoctorDTO updateDoctorDTO) {
         var updatedDoctor = doctorDataSource.updateDoctor(doctorId, updateDoctorDTO);
+
         return new DoctorDomain(updatedDoctor);
     }
 
@@ -47,24 +56,28 @@ public class DoctorGatewayImpl implements DoctorGateway {
     @Override
     public boolean isEmailAlreadyExists(String email) {
         var doctor = doctorDataSource.findDoctorByEmail(email);
+
         return doctor.isPresent();
     }
 
     @Override
     public boolean isPhoneAlreadyExists(String phone) {
         var doctor = doctorDataSource.findDoctorByPhone(phone);
+
         return doctor.isPresent();
     }
 
     @Override
     public boolean isCpfAlreadyExists(String cpf) {
         var doctor = doctorDataSource.findDoctorByCpf(cpf);
+
         return doctor.isPresent();
     }
 
     @Override
     public boolean isCrmAlreadyExists(String crm) {
         var doctor = doctorDataSource.findDoctorByCrm(crm);
+
         return doctor.isPresent();
     }
 
