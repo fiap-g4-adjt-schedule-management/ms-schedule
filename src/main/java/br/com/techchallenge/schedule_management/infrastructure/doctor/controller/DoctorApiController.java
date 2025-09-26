@@ -1,9 +1,9 @@
 package br.com.techchallenge.schedule_management.infrastructure.doctor.controller;
 
-import br.com.techchallenge.schedule_management.application.domain.entity.PaginationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ public interface DoctorApiController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    PaginationDomain<DoctorDTO> getDoctors(
+    PageResult<DoctorDTO> getDoctors(
             @RequestParam
             Integer page,
             @RequestParam

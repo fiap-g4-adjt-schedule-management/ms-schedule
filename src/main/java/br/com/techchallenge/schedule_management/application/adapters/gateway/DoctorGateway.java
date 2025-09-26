@@ -1,15 +1,15 @@
 package br.com.techchallenge.schedule_management.application.adapters.gateway;
 
 import br.com.techchallenge.schedule_management.application.domain.entity.DoctorDomain;
-import br.com.techchallenge.schedule_management.application.domain.entity.PaginationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 
 import java.util.Optional;
 
 public interface DoctorGateway {
 
-    PaginationDomain<DoctorDomain> getDoctors(Integer page, Integer size);
+    PageResult<DoctorDomain> getDoctors(Integer page, Integer size);
     Optional<DoctorDomain> getDoctorById(Long doctorId);
     DoctorDomain createDoctor(CreateDoctorDTO createDoctorDTO);
     DoctorDomain updateDoctor(Long doctorId, UpdateDoctorDTO updateDoctorDTO);

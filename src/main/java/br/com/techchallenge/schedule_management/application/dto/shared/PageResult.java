@@ -1,4 +1,4 @@
-package br.com.techchallenge.schedule_management.application.domain.entity;
+package br.com.techchallenge.schedule_management.application.dto.shared;
 
 import lombok.Getter;
 
@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class PaginationDomain<T> {
+public class PageResult<T> {
 
     private final List<T> items;
     private final Integer size;
     private final Integer page;
-    private final Integer totalItems;
-    private final Integer totalPages;
+    private final Long totalItems;
+    private final Long totalPages;
 
-    public PaginationDomain(
+    public PageResult(
             List<T> items,
             Integer page,
             Integer size,
-            Integer totalItems
+            Long totalItems
     ) {
         this.isSizeValid(size);
         this.isPageValid(page);
@@ -28,7 +28,7 @@ public class PaginationDomain<T> {
         this.size = size;
         this.page = page;
         this.totalItems = totalItems;
-        this.totalPages = (int) Math.ceil((double) totalItems / (double) size);
+        this.totalPages = (long) Math.ceil((double) totalItems / (double) size);
     }
 
     private void isSizeValid (Integer size) {
@@ -43,7 +43,7 @@ public class PaginationDomain<T> {
         }
     }
 
-    private void isTotalItemsValid (Integer totalItems) {
+    private void isTotalItemsValid (Long totalItems) {
         if (totalItems < 0) {
             throw new IllegalArgumentException("A quantidade total de itens deve ser maior ou igual a 0.");
         }

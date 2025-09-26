@@ -4,10 +4,10 @@ import br.com.techchallenge.schedule_management.application.adapters.datasource.
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.entity.Doctor;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.repository.DoctorRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,16 @@ public class DoctorDataSourceImpl implements DoctorDataSource {
     private final DoctorRepository doctorRepository;
 
     @Override
-    public Page<DoctorDTO> findDoctors(Integer page, Integer size) {
+    public PageResult<DoctorDTO> findDoctors(Integer page, Integer size) {
         var pageable = this.createPageable(page, size);
-        return doctorRepository.findAll(pageable).map(DoctorDTO::new);
+
+        var doctorsPage = doctorRepository.findAll(pageable);
+        return new PageResult<>(
+                doctorsPage.map(DoctorDTO::new).toList(),
+                page,
+                size,
+                doctorsPage.getTotalElements()
+        );
     }
 
     @Override

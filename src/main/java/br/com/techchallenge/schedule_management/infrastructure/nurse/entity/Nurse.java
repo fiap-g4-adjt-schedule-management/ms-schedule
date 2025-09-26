@@ -1,4 +1,4 @@
-package br.com.techchallenge.schedule_management.infrastructure.patient.entity;
+package br.com.techchallenge.schedule_management.infrastructure.nurse.entity;
 
 import br.com.techchallenge.schedule_management.infrastructure.address.entity.Address;
 import jakarta.persistence.*;
@@ -9,21 +9,22 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Entity(name = "nurse")
 @Table
-@Entity(name = "patient")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @EqualsAndHashCode(of = "id")
-public class Patient {
+public class Nurse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String cpf;
-    private String email;
     private String phone;
+    private String email;
+    private String coren;
 
     @Embedded
     private Address address;

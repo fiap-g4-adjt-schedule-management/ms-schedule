@@ -2,10 +2,10 @@ package br.com.techchallenge.schedule_management.infrastructure.doctor.controlle
 
 import br.com.techchallenge.schedule_management.application.adapters.controller.impl.DoctorControllerImpl;
 import br.com.techchallenge.schedule_management.application.adapters.datasource.DoctorDataSource;
-import br.com.techchallenge.schedule_management.application.domain.entity.PaginationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
+import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.controller.DoctorApiController;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class DoctorApiControllerImpl implements DoctorApiController {
     private final DoctorDataSource doctorDataSource;
 
     @Override
-    public PaginationDomain<DoctorDTO> getDoctors(Integer page, Integer size) {
+    public PageResult<DoctorDTO> getDoctors(Integer page, Integer size) {
         var doctorController = new DoctorControllerImpl(doctorDataSource);
 
         return doctorController.getDoctors(page, size);

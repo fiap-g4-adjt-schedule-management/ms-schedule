@@ -1,7 +1,5 @@
 package br.com.techchallenge.schedule_management.infrastructure.doctor.entity;
 
-import br.com.techchallenge.schedule_management.application.domain.entity.AddressDomain;
-import br.com.techchallenge.schedule_management.application.domain.entity.SpecialityDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
 import br.com.techchallenge.schedule_management.infrastructure.address.entity.Address;
@@ -11,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Table
 @Entity(name = "doctor")
@@ -33,6 +33,8 @@ public class Doctor {
     private Address address;
     @ManyToOne(fetch = FetchType.EAGER)
     private Speciality speciality;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Doctor (CreateDoctorDTO createDoctorDTO) {
         this(
@@ -43,7 +45,9 @@ public class Doctor {
                 createDoctorDTO.email(),
                 createDoctorDTO.crm(),
                 new Address(createDoctorDTO.address()),
-                new Speciality(createDoctorDTO.specialityId())
+                new Speciality(createDoctorDTO.specialityId()),
+                LocalDateTime.now(),
+                LocalDateTime.now()
         );
     }
 
@@ -55,5 +59,6 @@ public class Doctor {
         this.crm = updateDoctorDTO.crm();
         this.address.updateAddress(updateDoctorDTO.address());
         this.speciality = new Speciality(updateDoctorDTO.specialityId());
+        this.updatedAt = LocalDateTime.now();
     }
 }
