@@ -100,4 +100,9 @@ public class ConsultationGatewayImpl implements ConsultationGateway {
         consultationDataSource.sendFinishedConsultationToQueue(new ConsultationDTO(finishedConsultation));
     }
 
+    @Override
+    public void deleteConsultationById(Long consultationId) {
+        consultationDataSource.deleteConsultationById(consultationId);
+    }
+
 }

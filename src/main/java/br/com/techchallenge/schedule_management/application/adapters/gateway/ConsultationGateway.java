@@ -21,4 +21,5 @@ public interface ConsultationGateway {
     List<ConsultationDomain> getFinishedConsultations();
     void sendNotificationToQueue(NotificationDTO notificationDTO);
     void sendFinishedConsultationToHistory(ConsultationDomain finishedConsultation);
+    void deleteConsultationById(Long consultationId);
 }

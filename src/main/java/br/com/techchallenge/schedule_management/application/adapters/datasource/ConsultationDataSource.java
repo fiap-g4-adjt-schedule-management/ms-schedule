@@ -21,4 +21,6 @@ public interface ConsultationDataSource {
     void sendFinishedConsultationToQueue(ConsultationDTO consultationDTO);
     void sendNotificationToQueue(NotificationDTO notificationDTO);
     List<ConsultationDTO> getFinishedConsultations();
+    void deleteConsultationById(Long consultationId);
+
 }

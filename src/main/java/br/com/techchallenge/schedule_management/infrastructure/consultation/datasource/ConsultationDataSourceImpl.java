@@ -162,4 +162,13 @@ public class ConsultationDataSourceImpl implements ConsultationDataSource {
         return finishedConsultations.stream().map(ConsultationDTO::new).toList();
     }
 
+    @Override
+    public void deleteConsultationById(Long consultationId) {
+        var isExistConsultation =  this.consultationRepository.existsById(consultationId);
+
+        if (isExistConsultation) {
+            this.consultationRepository.deleteById(consultationId);
+        }
+    }
+
 }
