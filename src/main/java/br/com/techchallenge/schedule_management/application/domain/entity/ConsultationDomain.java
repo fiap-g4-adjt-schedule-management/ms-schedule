@@ -3,6 +3,7 @@ package br.com.techchallenge.schedule_management.application.domain.entity;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.ConsultationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +18,9 @@ public class ConsultationDomain {
     private NurseDomain createdBy;
     private String reason;
     private LocalDateTime createdAt;
+    @Setter
+    private ConsultationStatusDomain status;
+    private String observation;
 
     public ConsultationDomain(ConsultationDTO consultationDTO) {
         this.id = consultationDTO.consultationId();
@@ -26,6 +30,8 @@ public class ConsultationDomain {
         this.createdBy = new NurseDomain(consultationDTO.nurse());
         this.reason = consultationDTO.reason();
         this.createdAt = consultationDTO.createdAt();
+        this.observation = consultationDTO.observation();
+        this.status = ConsultationStatusDomain.valueOf(consultationDTO.status());
     }
 
 }

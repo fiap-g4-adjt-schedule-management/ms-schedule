@@ -2,8 +2,8 @@ package br.com.techchallenge.schedule_management.application.domain.usecase.Cons
 
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
 
-public interface SendCreatedConsultationToQueueCase {
+public interface UpdateConsultationStatusCase {
 
-    void run(ConsultationDomain consultationDomain);
+    ConsultationDomain run(Long consultationId, String status);
 
 }

@@ -7,6 +7,7 @@ public record CreateConsultationDTO(
         Long nurseId,
         Long doctorId,
         Long patientId,
-        LocalDateTime dateTime
+        LocalDateTime dateTime,
+        String reason
 
 ) { }

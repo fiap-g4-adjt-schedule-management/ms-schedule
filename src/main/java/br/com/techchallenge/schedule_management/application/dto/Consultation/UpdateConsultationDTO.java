@@ -7,6 +7,8 @@ public record UpdateConsultationDTO(
         Long nurseId,
         Long doctorId,
         Long patientId,
-        LocalDateTime dateTime
+        LocalDateTime dateTime,
+        String reason,
+        String observation
 
 ) {}

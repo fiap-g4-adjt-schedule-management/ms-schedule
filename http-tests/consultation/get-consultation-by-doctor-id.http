@@ -1,0 +1,2 @@
+GET {{BASE_URL}}/consultation/by-doctor/1?page=0&size=10
+Accept: application/json

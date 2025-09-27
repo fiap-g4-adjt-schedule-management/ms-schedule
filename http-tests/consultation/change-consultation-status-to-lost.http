@@ -1,0 +1,6 @@
+PATCH {{BASE_URL}}/consultation/update-status/2
+Content-Type: application/json
+
+{
+  "status": "LOST"
+}

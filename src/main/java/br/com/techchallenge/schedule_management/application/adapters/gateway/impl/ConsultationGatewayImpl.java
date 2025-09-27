@@ -3,10 +3,11 @@ package br.com.techchallenge.schedule_management.application.adapters.gateway.im
 import br.com.techchallenge.schedule_management.application.adapters.datasource.ConsultationDataSource;
 import br.com.techchallenge.schedule_management.application.adapters.gateway.ConsultationGateway;
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
-import br.com.techchallenge.schedule_management.application.dto.Consultation.ConsultationDTO;
+import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationStatusDomain;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.CreateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.UpdateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
+import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.NotificationDTO;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -24,6 +25,13 @@ public class ConsultationGatewayImpl implements ConsultationGateway {
     @Override
     public ConsultationDomain updateConsultation(Long consultationId, UpdateConsultationDTO updateConsultationDTO) {
         var updatedConsultation = consultationDataSource.updateConsultation(consultationId, updateConsultationDTO);
+
+        return new ConsultationDomain(updatedConsultation);
+    }
+
+    @Override
+    public ConsultationDomain updateConsultationStatus(Long id, ConsultationStatusDomain status) {
+        var updatedConsultation = consultationDataSource.updateConsultationStatus(id, status.name());
 
         return new ConsultationDomain(updatedConsultation);
     }
@@ -73,8 +81,8 @@ public class ConsultationGatewayImpl implements ConsultationGateway {
     }
 
     @Override
-    public void sendCreatedConsultationToQueue(ConsultationDomain consultationDomain) {
-        consultationDataSource.sendCreatedConsultationToQueue(new ConsultationDTO(consultationDomain));
+    public void sendNotificationToQueue(NotificationDTO notificationDTO) {
+        consultationDataSource.sendNotificationToQueue(notificationDTO);
     }
 
 }

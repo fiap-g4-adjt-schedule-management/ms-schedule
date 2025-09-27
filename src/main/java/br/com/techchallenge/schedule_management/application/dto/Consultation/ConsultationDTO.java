@@ -1,4 +1,4 @@
-package br.com.techchallenge.schedule_management.application.dto.Consultation;
+    package br.com.techchallenge.schedule_management.application.dto.Consultation;
 
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;
@@ -16,7 +16,9 @@ public record ConsultationDTO(
         NurseDTO nurse,
         String reason,
         LocalDateTime createdAt,
-        LocalDateTime dateTime
+        LocalDateTime dateTime,
+        String observation,
+        String status
 
 ) {
     public ConsultationDTO(ConsultationDomain consultationDomain) {
@@ -27,7 +29,9 @@ public record ConsultationDTO(
                 new NurseDTO(consultationDomain.getCreatedBy()),
                 consultationDomain.getReason(),
                 consultationDomain.getCreatedAt(),
-                consultationDomain.getDateTime()
+                consultationDomain.getDateTime(),
+                consultationDomain.getObservation(),
+                consultationDomain.getStatus().name()
         );
     }
 
@@ -39,7 +43,9 @@ public record ConsultationDTO(
                 new NurseDTO(createdConsultation.getNurse()),
                 createdConsultation.getReason(),
                 createdConsultation.getCreatedAt(),
-                createdConsultation.getConsultationDate()
+                createdConsultation.getConsultationDate(),
+                createdConsultation.getObservation(),
+                createdConsultation.getStatus().name()
         );
     }
 }
