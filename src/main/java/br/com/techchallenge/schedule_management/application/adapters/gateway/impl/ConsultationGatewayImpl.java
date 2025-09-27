@@ -4,11 +4,14 @@ import br.com.techchallenge.schedule_management.application.adapters.datasource.
 import br.com.techchallenge.schedule_management.application.adapters.gateway.ConsultationGateway;
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationStatusDomain;
+import br.com.techchallenge.schedule_management.application.dto.Consultation.ConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.CreateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.UpdateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.NotificationDTO;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 public class ConsultationGatewayImpl implements ConsultationGateway {
@@ -81,8 +84,20 @@ public class ConsultationGatewayImpl implements ConsultationGateway {
     }
 
     @Override
+    public List<ConsultationDomain> getFinishedConsultations() {
+        var finishedConsultations = this.consultationDataSource.getFinishedConsultations();
+
+        return finishedConsultations.stream().map(ConsultationDomain::new).toList();
+    }
+
+    @Override
     public void sendNotificationToQueue(NotificationDTO notificationDTO) {
         consultationDataSource.sendNotificationToQueue(notificationDTO);
+    }
+
+    @Override
+    public void sendFinishedConsultationToHistory(ConsultationDomain finishedConsultation) {
+        consultationDataSource.sendFinishedConsultationToQueue(new ConsultationDTO(finishedConsultation));
     }
 
 }

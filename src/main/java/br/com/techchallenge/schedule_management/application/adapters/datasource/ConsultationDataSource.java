@@ -6,6 +6,7 @@ import br.com.techchallenge.schedule_management.application.dto.Consultation.Upd
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.NotificationDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ConsultationDataSource {
@@ -19,5 +20,5 @@ public interface ConsultationDataSource {
     PageResult<ConsultationDTO> getConsultationsByPatientId(Long patientId, Integer page, Integer size);
     void sendFinishedConsultationToQueue(ConsultationDTO consultationDTO);
     void sendNotificationToQueue(NotificationDTO notificationDTO);
-
+    List<ConsultationDTO> getFinishedConsultations();
 }

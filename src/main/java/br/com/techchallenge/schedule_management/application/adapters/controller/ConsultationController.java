@@ -14,5 +14,6 @@ public interface ConsultationController {
     ConsultationDTO createConsultation(CreateConsultationDTO createConsultationDTO);
     ConsultationDTO updateConsultation(Long consultationId, UpdateConsultationDTO updateConsultationDTO);
     ConsultationDTO updateConsultationStatus(Long consultationId, String status);
+    void sendFinishedConsultationsToHistory();
 
 }

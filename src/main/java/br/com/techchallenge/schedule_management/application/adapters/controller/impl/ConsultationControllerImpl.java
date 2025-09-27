@@ -128,4 +128,12 @@ public class ConsultationControllerImpl implements ConsultationController {
         return new ConsultationDTO(updatedConsultation);
     }
 
+    @Override
+    public void sendFinishedConsultationsToHistory() {
+        var consultationGateway = new ConsultationGatewayImpl(consultationDataSource);
+        var sendFinishedConsultationsToHistoryCase = new SendFinishedConsultationsToHistoryCaseImpl(consultationGateway);
+
+        sendFinishedConsultationsToHistoryCase.run();
+    }
+
 }

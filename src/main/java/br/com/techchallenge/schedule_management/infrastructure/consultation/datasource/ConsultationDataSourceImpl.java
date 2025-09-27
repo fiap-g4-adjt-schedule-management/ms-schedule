@@ -18,6 +18,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -148,6 +149,17 @@ public class ConsultationDataSourceImpl implements ConsultationDataSource {
                 RabbitMQConfiguration.NOTIFICATION_ROUTING_KEY,
                 notificationDTO
         );
+    }
+
+    @Override
+    public List<ConsultationDTO> getFinishedConsultations() {
+        var finishedConsultations = this.consultationRepository.getFinishedConsultations(List.of(
+                ConsultationStatus.DONE,
+                ConsultationStatus.CANCELED,
+                ConsultationStatus.LOST
+        ));
+
+        return finishedConsultations.stream().map(ConsultationDTO::new).toList();
     }
 
 }

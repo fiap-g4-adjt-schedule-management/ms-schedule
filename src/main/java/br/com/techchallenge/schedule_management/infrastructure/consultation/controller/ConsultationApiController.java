@@ -67,4 +67,6 @@ public interface ConsultationApiController {
             UpdateConsultationStatusDTO updateConsultationStatusDTO
     );
 
+    void sendFinishedConsultationsToHistory();
+
 }

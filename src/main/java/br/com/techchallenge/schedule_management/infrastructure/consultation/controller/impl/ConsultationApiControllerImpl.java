@@ -9,6 +9,7 @@ import br.com.techchallenge.schedule_management.application.dto.shared.PageResul
 import br.com.techchallenge.schedule_management.infrastructure.consultation.controller.ConsultationApiController;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.UpdateConsultationStatusDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,6 +67,14 @@ public class ConsultationApiControllerImpl implements ConsultationApiController 
         var consultationController = new ConsultationControllerImpl(consultationDataSource);
 
         return consultationController.updateConsultationStatus(consultationId, updateConsultationStatusDTO.status());
+    }
+
+    @Override
+    @Scheduled(cron = "0 */1 * * * *")
+    public void sendFinishedConsultationsToHistory() {
+        var consultationController = new ConsultationControllerImpl(consultationDataSource);
+
+        consultationController.sendFinishedConsultationsToHistory();
     }
 
 }
