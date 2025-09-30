@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +39,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth").permitAll();
-                    auth.anyRequest().authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/consultation").hasRole("NURSE");
+                    auth.requestMatchers(HttpMethod.GET, "/consultation/by-patient/").hasRole("PATIENT");
+                    auth.anyRequest().denyAll();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(

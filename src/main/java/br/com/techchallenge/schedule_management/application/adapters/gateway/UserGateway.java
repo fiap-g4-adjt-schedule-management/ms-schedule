@@ -6,7 +6,7 @@ import br.com.techchallenge.schedule_management.application.dto.Authentication.T
 
 public interface UserGateway {
 
-    UserDomain getUserByCredentials(CredentialsDTO credentialDTO);
+    UserDomain getUserByCredentialsId(Long credentialsId);
     TokenDTO  generateToken(UserDomain userDomain);
 
 }

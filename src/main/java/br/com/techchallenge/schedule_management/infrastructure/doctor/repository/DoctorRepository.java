@@ -13,5 +13,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Optional<Doctor> findByPhone(String phone);
     Optional<Doctor> findByCpf(String cpf);
     Optional<Doctor> findByCrm(String crm);
+    Optional<Doctor> findByCredentialsId(Long credentialsId);
 
 }

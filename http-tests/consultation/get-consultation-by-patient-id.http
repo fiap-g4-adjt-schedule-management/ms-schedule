@@ -1,2 +1,19 @@
+POST {{ BASE_URL }}/auth
+Content-Type: application/json
+
+{
+  "email": "doctor1@example.com",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("token", response.body.token)
+%}
+
+###
+
 GET {{BASE_URL}}/consultation/by-patient/1?page=0&size=10
 Accept: application/json
+Authorization: Bearer {{ token }}
+
+###

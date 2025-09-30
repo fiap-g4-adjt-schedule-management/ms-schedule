@@ -12,7 +12,9 @@ public class AuthenticateCaseImpl implements AuthenticateCase {
     private final UserGateway userGateway;
 
     @Override
-    public TokenDTO run(Long credentialsId, UserTypeDomain userType) {
-        return null;
+    public TokenDTO run(Long credentialsId) {
+        var user = userGateway.getUserByCredentialsId(credentialsId);
+
+        return userGateway.generateToken(user);
     }
 }

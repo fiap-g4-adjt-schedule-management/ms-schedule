@@ -16,9 +16,10 @@ public class UserGatewayImpl implements UserGateway {
     private final TokenDataSource tokenDataSource;
 
     @Override
-    public UserDomain getUserByCredentials(CredentialsDTO credentialDTO) {
-        var userDTO = userDataSource.getUserByCredentials(credentialDTO);
-        return new UserDomain(userDTO);
+    public UserDomain getUserByCredentialsId(Long credentialsId) {
+        var userDTOOp = userDataSource.getUserByCredentialsId(credentialsId);
+
+        return userDTOOp.map(UserDomain::new).orElse(null);
     }
 
     @Override
