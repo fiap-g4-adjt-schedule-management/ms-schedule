@@ -9,14 +9,6 @@ import java.util.Optional;
 
 public interface DoctorDataSource {
 
-    PageResult<DoctorDTO> findDoctors(Integer page, Integer size);
-    Optional<DoctorDTO> findDoctorById(Long id);
-    DoctorDTO createDoctor(CreateDoctorDTO createDoctorDTO);
-    DoctorDTO updateDoctor(Long id, UpdateDoctorDTO updateDoctorDTO);
-    void deleteDoctorById(Long id);
-    Optional<DoctorDTO> findDoctorByEmail(String email);
-    Optional<DoctorDTO> findDoctorByCrm(String crm);
-    Optional<DoctorDTO> findDoctorByCpf(String cpf);
-    Optional<DoctorDTO> findDoctorByPhone(String phone);
+
 
 }

@@ -23,3 +23,9 @@ spring:
     port: ${RABBIT_PORT}
     username: ${RABBIT_USER}
     password: ${RABBIT_PASSWORD}
+
+jwt:
+  private:
+    key: classpath:app.key
+  public:
+    key: classpath:app.pub

@@ -3,6 +3,7 @@ package br.com.techchallenge.schedule_management.infrastructure.doctor.entity;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.CreateDoctorDTO;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.UpdateDoctorDTO;
 import br.com.techchallenge.schedule_management.infrastructure.address.entity.Address;
+import br.com.techchallenge.schedule_management.infrastructure.authentication.entity.Credentials;
 import br.com.techchallenge.schedule_management.infrastructure.speciality.entity.Speciality;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,9 @@ public class Doctor {
     private Speciality speciality;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Credentials credentials;
 
     public Doctor (CreateDoctorDTO createDoctorDTO) {
         this(
