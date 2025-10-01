@@ -82,9 +82,12 @@ public class ConsultationControllerImpl implements ConsultationController {
 
         sendNotificationToQueueCase.run(new NotificationDTO(
                 "Sua consulta foi marcada!",
-                "Sua consulta foi marcada para o dia " + createdConsultation.getDateTime() + " gostaria de confirmar sua presença?",
+                createdConsultation.getPatient().getName(),
                 createdConsultation.getPatient().getEmail(),
-                createdConsultation.getPatient().getPhone()
+                createdConsultation.getPatient().getPhone(),
+                createdConsultation.getDoctor().getName(),
+                createdConsultation.getDateTime(),
+                createdConsultation.getStatus().name()
         ));
 
         return new ConsultationDTO(createdConsultation);
@@ -97,13 +100,16 @@ public class ConsultationControllerImpl implements ConsultationController {
 
         var updatedConsultation = updateConsultationCase.run(consultationId, updateConsultationDTO);
 
-        var sendNotificationToQueue = new SendNotificationToQueueCaseImpl(consultationGateway);
+        var sendNotificationToQueueCase = new SendNotificationToQueueCaseImpl(consultationGateway);
 
-        sendNotificationToQueue.run(new NotificationDTO(
+        sendNotificationToQueueCase.run(new NotificationDTO(
                 "Sua consulta foi atualizada!",
-                "Sua consulta foi atualizada para o dia " + updatedConsultation.getDateTime() + " gostaria de confirmar sua presença?",
+                updatedConsultation.getPatient().getName(),
                 updatedConsultation.getPatient().getEmail(),
-                updatedConsultation.getPatient().getPhone()
+                updatedConsultation.getPatient().getPhone(),
+                updatedConsultation.getDoctor().getName(),
+                updatedConsultation.getDateTime(),
+                updatedConsultation.getStatus().name()
         ));
 
         return new ConsultationDTO(updatedConsultation);
@@ -120,9 +126,12 @@ public class ConsultationControllerImpl implements ConsultationController {
 
         sendNotificationToQueueCase.run(new NotificationDTO(
                 "A situação da sua consulta foi alterada!",
-                "Sua consulta foi " + status + "!",
+                updatedConsultation.getPatient().getName(),
                 updatedConsultation.getPatient().getEmail(),
-                updatedConsultation.getPatient().getPhone()
+                updatedConsultation.getPatient().getPhone(),
+                updatedConsultation.getDoctor().getName(),
+                updatedConsultation.getDateTime(),
+                updatedConsultation.getStatus().name()
         ));
 
         return new ConsultationDTO(updatedConsultation);
