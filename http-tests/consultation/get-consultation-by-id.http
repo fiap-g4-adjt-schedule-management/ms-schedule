@@ -1,0 +1,2 @@
+GET {{BASE_URL}}/consultation/1
+Accept: application/json

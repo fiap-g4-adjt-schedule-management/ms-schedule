@@ -6,14 +6,11 @@ import br.com.techchallenge.schedule_management.infrastructure.doctor.entity.Doc
 import br.com.techchallenge.schedule_management.infrastructure.nurse.entity.Nurse;
 import br.com.techchallenge.schedule_management.infrastructure.patient.entity.Patient;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "consultation")
+@Entity(name = "Consultation")
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +36,12 @@ public class Consultation {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private ConsultationStatus status;
+
+    private String observation;
+
     public Consultation(
             CreateConsultationDTO createConsultationDTO,
             Patient patient,
@@ -51,6 +54,8 @@ public class Consultation {
         this.consultationDate = createConsultationDTO.dateTime();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.reason = createConsultationDTO.reason();
+        this.status = ConsultationStatus.SCHEDULED;
     }
 
     public void updateConsultation(
@@ -64,5 +69,8 @@ public class Consultation {
         this.nurse = nurse;
         this.consultationDate = updateConsultationDTO.dateTime();
         this.updatedAt = LocalDateTime.now();
+        this.reason = updateConsultationDTO.reason();
+        this.observation = updateConsultationDTO.observation();
     }
+
 }

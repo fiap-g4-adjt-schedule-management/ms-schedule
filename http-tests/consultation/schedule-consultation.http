@@ -1,0 +1,10 @@
+POST {{BASE_URL}}/consultation
+Content-Type: application/json
+
+{
+  "nurseId": 1,
+  "doctorId": 2,
+  "patientId": 1,
+  "dateTime": "2025-10-05T14:30:00",
+  "reason": "Dor de barriga"
+}

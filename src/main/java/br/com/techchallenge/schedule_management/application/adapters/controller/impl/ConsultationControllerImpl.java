@@ -8,6 +8,7 @@ import br.com.techchallenge.schedule_management.application.dto.Consultation.Con
 import br.com.techchallenge.schedule_management.application.dto.Consultation.CreateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.UpdateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
+import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.NotificationDTO;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -74,11 +75,17 @@ public class ConsultationControllerImpl implements ConsultationController {
     public ConsultationDTO createConsultation(CreateConsultationDTO createConsultationDTO) {
         var consultationGateway = new ConsultationGatewayImpl(consultationDataSource);
         var createConsultationCase = new CreateConsultationCaseImpl(consultationGateway);
-        var sendCreatedConsultationToQueueCase = new SendCreatedConsultationToQueueCaseImpl(consultationGateway);
 
         var createdConsultation = createConsultationCase.run(createConsultationDTO);
 
-        sendCreatedConsultationToQueueCase.run(createdConsultation);
+        var sendNotificationToQueueCase = new SendNotificationToQueueCaseImpl(consultationGateway);
+
+        sendNotificationToQueueCase.run(new NotificationDTO(
+                "Sua consulta foi marcada!",
+                "Sua consulta foi marcada para o dia " + createdConsultation.getDateTime() + " gostaria de confirmar sua presença?",
+                createdConsultation.getPatient().getEmail(),
+                createdConsultation.getPatient().getPhone()
+        ));
 
         return new ConsultationDTO(createdConsultation);
     }
@@ -90,7 +97,43 @@ public class ConsultationControllerImpl implements ConsultationController {
 
         var updatedConsultation = updateConsultationCase.run(consultationId, updateConsultationDTO);
 
+        var sendNotificationToQueue = new SendNotificationToQueueCaseImpl(consultationGateway);
+
+        sendNotificationToQueue.run(new NotificationDTO(
+                "Sua consulta foi atualizada!",
+                "Sua consulta foi atualizada para o dia " + updatedConsultation.getDateTime() + " gostaria de confirmar sua presença?",
+                updatedConsultation.getPatient().getEmail(),
+                updatedConsultation.getPatient().getPhone()
+        ));
+
         return new ConsultationDTO(updatedConsultation);
+    }
+
+    @Override
+    public ConsultationDTO updateConsultationStatus(Long consultationId, String status) {
+        var consultationGateway = new ConsultationGatewayImpl(consultationDataSource);
+        var updateConsultationStatusCase = new UpdateConsultationStatusCaseImpl(consultationGateway);
+
+        var updatedConsultation = updateConsultationStatusCase.run(consultationId, status);
+
+        var sendNotificationToQueueCase = new  SendNotificationToQueueCaseImpl(consultationGateway);
+
+        sendNotificationToQueueCase.run(new NotificationDTO(
+                "A situação da sua consulta foi alterada!",
+                "Sua consulta foi " + status + "!",
+                updatedConsultation.getPatient().getEmail(),
+                updatedConsultation.getPatient().getPhone()
+        ));
+
+        return new ConsultationDTO(updatedConsultation);
+    }
+
+    @Override
+    public void sendFinishedConsultationsToHistory() {
+        var consultationGateway = new ConsultationGatewayImpl(consultationDataSource);
+        var sendFinishedConsultationsToHistoryCase = new SendFinishedConsultationsToHistoryCaseImpl(consultationGateway);
+
+        sendFinishedConsultationsToHistoryCase.run();
     }
 
 }

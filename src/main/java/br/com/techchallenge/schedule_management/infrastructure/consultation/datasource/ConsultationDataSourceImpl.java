@@ -8,6 +8,7 @@ import br.com.techchallenge.schedule_management.application.dto.shared.PageResul
 import br.com.techchallenge.schedule_management.infrastructure.config.rabbitmq.RabbitMQConfiguration;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.NotificationDTO;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.entity.Consultation;
+import br.com.techchallenge.schedule_management.infrastructure.consultation.entity.ConsultationStatus;
 import br.com.techchallenge.schedule_management.infrastructure.consultation.repository.ConsultationRepository;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.repository.DoctorRepository;
 import br.com.techchallenge.schedule_management.infrastructure.nurse.repository.NurseRepository;
@@ -17,6 +18,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -65,6 +67,18 @@ public class ConsultationDataSourceImpl implements ConsultationDataSource {
         );
 
         consultation = consultationRepository.save(consultation);
+
+        return new ConsultationDTO(consultation);
+    }
+
+    @Override
+    public ConsultationDTO updateConsultationStatus(Long consultationId, String status) {
+        var consultation = this.consultationRepository.findById(consultationId)
+                .orElseThrow(() -> new RuntimeException("Consultation not found"));
+
+        consultation.setStatus(ConsultationStatus.valueOf(status));
+
+        this.consultationRepository.save(consultation);
 
         return new ConsultationDTO(consultation);
     }
@@ -120,25 +134,41 @@ public class ConsultationDataSourceImpl implements ConsultationDataSource {
     }
 
     @Override
-    public void sendCreatedConsultationToQueue(ConsultationDTO consultationDTO) {
-        var notificationDTO = new NotificationDTO(
-                "Consultation scheduled",
-                "Your consultation was scheduled, confirm your presence at " + consultationDTO.dateTime() + "?",
-                consultationDTO.patient().email(),
-                consultationDTO.patient().phone()
-        );
-
-        rabbitTemplate.convertAndSend(
-                RabbitMQConfiguration.NOTIFICATION_EXCHANGE_NAME,
-                RabbitMQConfiguration.NOTIFICATION_ROUTING_KEY,
-                notificationDTO
-        );
-
+    public void sendFinishedConsultationToQueue(ConsultationDTO consultationDTO) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfiguration.HISTORY_EXCHANGE_NAME,
                 RabbitMQConfiguration.HISTORY_ROUTING_KEY,
                 consultationDTO
         );
+    }
+
+    @Override
+    public void sendNotificationToQueue(NotificationDTO notificationDTO) {
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfiguration.NOTIFICATION_EXCHANGE_NAME,
+                RabbitMQConfiguration.NOTIFICATION_ROUTING_KEY,
+                notificationDTO
+        );
+    }
+
+    @Override
+    public List<ConsultationDTO> getFinishedConsultations() {
+        var finishedConsultations = this.consultationRepository.getFinishedConsultations(List.of(
+                ConsultationStatus.DONE,
+                ConsultationStatus.CANCELED,
+                ConsultationStatus.LOST
+        ));
+
+        return finishedConsultations.stream().map(ConsultationDTO::new).toList();
+    }
+
+    @Override
+    public void deleteConsultationById(Long consultationId) {
+        var isExistConsultation =  this.consultationRepository.existsById(consultationId);
+
+        if (isExistConsultation) {
+            this.consultationRepository.deleteById(consultationId);
+        }
     }
 
 }

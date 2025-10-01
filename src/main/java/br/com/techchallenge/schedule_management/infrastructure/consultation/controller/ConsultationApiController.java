@@ -5,6 +5,7 @@ import br.com.techchallenge.schedule_management.application.dto.Consultation.Con
 import br.com.techchallenge.schedule_management.application.dto.Consultation.CreateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.Consultation.UpdateConsultationDTO;
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
+import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.UpdateConsultationStatusDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,5 +58,15 @@ public interface ConsultationApiController {
             @RequestBody
             UpdateConsultationDTO updateConsultationDTO
     );
+
+    @PatchMapping("/update-status/{consultationId}")
+    ConsultationDTO updateConsultationStatus(
+            @PathVariable
+            Long consultationId,
+            @RequestBody
+            UpdateConsultationStatusDTO updateConsultationStatusDTO
+    );
+
+    void sendFinishedConsultationsToHistory();
 
 }
