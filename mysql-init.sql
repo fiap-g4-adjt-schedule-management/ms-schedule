@@ -121,42 +121,42 @@ VALUES
 
 -- Pacientes
 INSERT INTO credentials (email, password, user_type) VALUES
-     ('paciente1@example.com', '123456', 'PATIENT'),
-     ('paciente2@example.com', '123456', 'PATIENT'),
-     ('paciente3@example.com', '123456', 'PATIENT'),
-     ('paciente4@example.com', '123456', 'PATIENT'),
-     ('paciente5@example.com', '123456', 'PATIENT'),
-     ('paciente6@example.com', '123456', 'PATIENT'),
-     ('paciente7@example.com', '123456', 'PATIENT'),
-     ('paciente8@example.com', '123456', 'PATIENT'),
-     ('paciente9@example.com', '123456', 'PATIENT'),
-     ('paciente10@example.com', '123456', 'PATIENT');
+     ('paciente1@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente2@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente3@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente4@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente5@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente6@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente7@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente8@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente9@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT'),
+     ('paciente10@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'PATIENT');
 
 -- Enfermeiros
 INSERT INTO credentials (email, password, user_type) VALUES
-     ('nurse1@example.com', '123456', 'NURSE'),
-     ('nurse2@example.com', '123456', 'NURSE'),
-     ('nurse3@example.com', '123456', 'NURSE'),
-     ('nurse4@example.com', '123456', 'NURSE'),
-     ('nurse5@example.com', '123456', 'NURSE'),
-     ('nurse6@example.com', '123456', 'NURSE'),
-     ('nurse7@example.com', '123456', 'NURSE'),
-     ('nurse8@example.com', '123456', 'NURSE'),
-     ('nurse9@example.com', '123456', 'NURSE'),
-     ('nurse10@example.com', '123456', 'NURSE');
+     ('nurse1@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse2@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse3@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse4@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse5@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse6@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse7@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse8@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse9@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE'),
+     ('nurse10@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'NURSE');
 
 -- Médicos
 INSERT INTO credentials (email, password, user_type) VALUES
-     ('doctor1@example.com', '123456', 'DOCTOR'),
-     ('doctor2@example.com', '123456', 'DOCTOR'),
-     ('doctor3@example.com', '123456', 'DOCTOR'),
-     ('doctor4@example.com', '123456', 'DOCTOR'),
-     ('doctor5@example.com', '123456', 'DOCTOR'),
-     ('doctor6@example.com', '123456', 'DOCTOR'),
-     ('doctor7@example.com', '123456', 'DOCTOR'),
-     ('doctor8@example.com', '123456', 'DOCTOR'),
-     ('doctor9@example.com', '123456', 'DOCTOR'),
-     ('doctor10@example.com', '123456', 'DOCTOR');
+     ('doctor1@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor2@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor3@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor4@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor5@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor6@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor7@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor8@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor9@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR'),
+     ('doctor10@example.com', '$2a$10$6a7NTaaZlMLfxdaRqrjk/OxmPV0gZHOBly7tqehm1OvUndNHm42WG', 'DOCTOR');
 
 INSERT INTO patient (name, cpf, email, phone, zip_code, street, number, complement, neighborhood, city, state, created_at, updated_at, credentials_id) VALUES
     ('João da Silva', '11111111111', 'paciente1@example.com', '(11)90001-0001', '01001-000', 'Rua A', '101', NULL, 'Centro', 'São Paulo', 'SP', NOW(), NOW(), 1),

@@ -5,6 +5,7 @@ import br.com.techchallenge.schedule_management.application.dto.Authentication.C
 import br.com.techchallenge.schedule_management.application.dto.Authentication.FullCredentialsDTO;
 import br.com.techchallenge.schedule_management.infrastructure.authentication.repository.CredentialsRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,13 +13,11 @@ import org.springframework.stereotype.Service;
 public class CredentialsDataSourceImpl implements CredentialsDataSource {
 
     private final CredentialsRepository credentialsRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public FullCredentialsDTO getCredentials(CredentialsDTO credentialDTO) {
-        var credentials = credentialsRepository.findByEmailAndPassword(
-                credentialDTO.email(),
-                credentialDTO.password()
-        );
+    public FullCredentialsDTO getCredentialsByEmail(String email) {
+        var credentials = credentialsRepository.findByEmail(email);
 
         return new FullCredentialsDTO(
                 credentials.getId(),
@@ -26,6 +25,11 @@ public class CredentialsDataSourceImpl implements CredentialsDataSource {
                 credentials.getPassword(),
                 credentials.getUserType().name()
         );
+    }
+
+    @Override
+    public Boolean checkEncodedPassword(String originalPassword, String encodedPassword) {
+        return passwordEncoder.matches(originalPassword, encodedPassword);
     }
 
 }

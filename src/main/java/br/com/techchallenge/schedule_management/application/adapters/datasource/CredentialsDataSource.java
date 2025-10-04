@@ -5,6 +5,7 @@ import br.com.techchallenge.schedule_management.application.dto.Authentication.F
 
 public interface CredentialsDataSource {
 
-    FullCredentialsDTO getCredentials(CredentialsDTO credentialDTO);
+    FullCredentialsDTO getCredentialsByEmail(String email);
+    Boolean checkEncodedPassword(String originalPassword, String encodedPassword);
 
 }
