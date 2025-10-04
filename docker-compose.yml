@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql
+    container_name: ms-schedule-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=ms_schedule
+    volumes:
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
+
+  rabbit:
+    image: rabbitmq
+    container_name: tech-challenge-rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms-schedule
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=ms-schedule-db
+      - DB_PORT=3306
+      - DB_DATABASE=ms_schedule
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - RABBIT_HOST=tech-challenge-rabbit
+      - RABBIT_PORT=5672
+      - RABBIT_USER=user
+      - RABBIT_PASSWORD=password
+    depends_on:
+      - mysql
+      - rabbit
