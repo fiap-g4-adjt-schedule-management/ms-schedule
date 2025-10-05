@@ -4,6 +4,7 @@ import br.com.techchallenge.schedule_management.application.adapters.gateway.Con
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
 import br.com.techchallenge.schedule_management.application.domain.usecase.Consultation.GetConsultationByPatientIdCase;
 import br.com.techchallenge.schedule_management.application.dto.shared.PageResult;
+import br.com.techchallenge.schedule_management.application.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -13,7 +14,13 @@ public class GetConsultationByPatientIdCaseImpl implements GetConsultationByPati
 
     @Override
     public PageResult<ConsultationDomain> run(Long patientId, Integer page, Integer size) {
-        return consultationGateway.getConsultationsByPatientId(patientId, page, size);
+        var consultationList = consultationGateway.getConsultationsByPatientId(patientId, page, size);
+
+        if (consultationList == null) {
+            throw new NotFoundException("Consultation not found for patient id: " + patientId);
+        }
+
+        return consultationList;
     }
 
 }

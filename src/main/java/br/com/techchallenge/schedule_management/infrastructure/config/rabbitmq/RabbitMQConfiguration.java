@@ -1,6 +1,10 @@
 package br.com.techchallenge.schedule_management.infrastructure.config.rabbitmq;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -16,7 +20,6 @@ public class RabbitMQConfiguration {
     public static final String NOTIFICATION_ROUTING_KEY = "notification";
 
     public static final String HISTORY_EXCHANGE_NAME = "history_exchange";
-    public static final String HISTORY_QUEUE = "history_queue";
     public static final String HISTORY_ROUTING_KEY = "history";
 
     @Bean
@@ -43,26 +46,8 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public DirectExchange getHistoryExchange() {
-        return new DirectExchange(HISTORY_EXCHANGE_NAME);
-    }
-
-    @Bean
-    public Queue getHistoryQueue() {
-        return new Queue(HISTORY_QUEUE, true);
-    }
-
-    @Bean
-    public Binding getHistoryBinding(
-            @Qualifier("getHistoryQueue")
-            Queue historyQueue,
-            @Qualifier("getHistoryExchange")
-            DirectExchange historyExchange
-    ) {
-        return BindingBuilder
-                .bind(historyQueue)
-                .to(historyExchange)
-                .with(HISTORY_ROUTING_KEY);
+    public TopicExchange historyExchange() {
+        return new TopicExchange(HISTORY_EXCHANGE_NAME, true, false);
     }
 
     @Bean
