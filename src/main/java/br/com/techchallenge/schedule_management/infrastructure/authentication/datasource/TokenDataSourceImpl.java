@@ -37,6 +37,8 @@ public class TokenDataSourceImpl implements TokenDataSource {
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expire))
                 .subject(userDTO.name())
+                .claim("userId",  userDTO.id())
+                .claim("userType", userDTO.userType())
                 .claim("scope", scope)
                 .build();
 

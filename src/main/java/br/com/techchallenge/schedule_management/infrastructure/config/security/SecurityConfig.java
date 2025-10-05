@@ -50,9 +50,14 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/consultation").hasRole("NURSE");
+                    auth.requestMatchers("/auth").permitAll();
+                    auth.requestMatchers(
+                            "/consultation",
+                            "/consultation/**"
+                    ).hasRole("NURSE");
                     auth.requestMatchers(HttpMethod.GET, "/consultation/by-patient/").hasRole("PATIENT");
-                    auth.anyRequest().permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/consultation/by-doctor/").hasRole("DOCTOR");
+                    auth.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(
