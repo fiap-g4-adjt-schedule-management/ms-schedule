@@ -10,6 +10,7 @@ import br.com.techchallenge.schedule_management.infrastructure.consultation.cont
 import br.com.techchallenge.schedule_management.infrastructure.consultation.dto.UpdateConsultationStatusDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

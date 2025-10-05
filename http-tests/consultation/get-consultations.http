@@ -14,6 +14,6 @@ Content-Type: application/json
 
 GET {{BASE_URL}}/consultation?page=0&size=10
 Accept: application/json
-//Authorization: Bearer {{ token }}
+Authorization: Bearer {{ token }}
 
 ###

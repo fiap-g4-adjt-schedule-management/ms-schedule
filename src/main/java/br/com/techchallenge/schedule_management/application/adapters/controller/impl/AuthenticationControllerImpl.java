@@ -10,6 +10,7 @@ import br.com.techchallenge.schedule_management.application.domain.usecase.Authe
 import br.com.techchallenge.schedule_management.application.domain.usecase.Authentication.impl.GetCredentialsCaseImpl;
 import br.com.techchallenge.schedule_management.application.dto.Authentication.CredentialsDTO;
 import br.com.techchallenge.schedule_management.application.dto.Authentication.TokenDTO;
+import br.com.techchallenge.schedule_management.application.exceptions.UnauthorizedException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -31,19 +32,25 @@ public class AuthenticationControllerImpl implements AuthenticationController {
         var checkEncodedPasswordCase = new CheckEncodedPasswordCaseImpl(credentialsGateway);
         checkEncodedPasswordCase.run(credentialDTO.password(), credentials.password());
 
-        UserGateway userGateway;
-
-        if (credentials.userType().equals("DOCTOR")) {
-            userGateway = new UserGatewayImpl(doctorDataSource, tokenDataSource);
-        } else if (credentials.userType().equals("PATIENT")) {
-            userGateway = new UserGatewayImpl(patientDataSource, tokenDataSource);
-        } else {
-            userGateway = new UserGatewayImpl(nurseDataSource, tokenDataSource);
-        }
+        UserGateway userGateway = defineUserGateway(credentials.userType());
 
         var authenticateCase = new AuthenticateCaseImpl(userGateway);
 
         return authenticateCase.run(credentials.id());
     }
 
+    private UserGateway defineUserGateway(String userType) {
+        switch(userType) {
+            case "DOCTOR" -> {
+                return new UserGatewayImpl(doctorDataSource, tokenDataSource);
+            }
+            case "PATIENT" -> {
+                return new UserGatewayImpl(patientDataSource, tokenDataSource);
+            }
+            case "NURSE" -> {
+                return new UserGatewayImpl(nurseDataSource, tokenDataSource);
+            }
+            default -> throw new UnauthorizedException("Invalid user type");
+        }
+    }
 }

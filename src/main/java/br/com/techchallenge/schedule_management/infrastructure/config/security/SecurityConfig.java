@@ -17,6 +17,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
@@ -33,19 +35,30 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     private RSAPrivateKey privateKey;
 
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
+        converter.setAuthorityPrefix("");
+        converter.setAuthoritiesClaimName("scope");
+
+        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+        jwtConverter.setJwtGrantedAuthoritiesConverter(converter);
+        return jwtConverter;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/consultation").hasRole("NURSE");
+                    auth.requestMatchers("/consultation").hasRole("NURSE");
                     auth.requestMatchers(HttpMethod.GET, "/consultation/by-patient/").hasRole("PATIENT");
-                    auth.anyRequest().denyAll();
+                    auth.anyRequest().permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(
-                        conf -> conf.jwt(Customizer.withDefaults())
+                        conf -> conf.jwt(
+                                jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        )
                 );
 
         http.headers(
