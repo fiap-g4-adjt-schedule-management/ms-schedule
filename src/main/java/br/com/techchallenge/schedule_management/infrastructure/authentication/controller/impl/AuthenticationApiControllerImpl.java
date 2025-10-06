@@ -5,6 +5,7 @@ import br.com.techchallenge.schedule_management.application.adapters.datasource.
 import br.com.techchallenge.schedule_management.infrastructure.authentication.controller.AuthenticationApiController;
 import br.com.techchallenge.schedule_management.application.dto.Authentication.CredentialsDTO;
 import br.com.techchallenge.schedule_management.application.dto.Authentication.TokenDTO;
+import br.com.techchallenge.schedule_management.infrastructure.authentication.dto.UserDataDTO;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.datasource.DoctorDataSourceImpl;
 import br.com.techchallenge.schedule_management.infrastructure.doctor.repository.DoctorRepository;
 import br.com.techchallenge.schedule_management.infrastructure.nurse.datasource.NurseDataSourceImpl;
@@ -12,8 +13,11 @@ import br.com.techchallenge.schedule_management.infrastructure.nurse.repository.
 import br.com.techchallenge.schedule_management.infrastructure.patient.datasource.PatientDataSourceImpl;
 import br.com.techchallenge.schedule_management.infrastructure.patient.repository.PatientRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RequestMapping("/auth")
 @RestController
@@ -52,6 +56,16 @@ public class AuthenticationApiControllerImpl implements AuthenticationApiControl
         var tokenDTO = authenticationController.authenticate(credentialsDTO);
 
         return ResponseEntity.ok(tokenDTO);
+    }
+
+    @Override
+    public ResponseEntity<UserDataDTO> validateToken(Jwt jwt) {
+        Map<String, Object> claims = jwt.getClaims();
+
+        return ResponseEntity.ok(new UserDataDTO(
+                (Long) claims.get("userId"),
+                (String) claims.get("userType")
+        ));
     }
 
 }
