@@ -83,11 +83,11 @@ public class ConsultationControllerImpl implements ConsultationController {
         sendNotificationToQueueCase.run(new NotificationDTO(
                 "Sua consulta foi marcada!",
                 createdConsultation.getPatient().getName(),
-                createdConsultation.getPatient().getEmail(),
-                createdConsultation.getPatient().getPhone(),
                 createdConsultation.getDoctor().getName(),
                 createdConsultation.getDateTime(),
-                createdConsultation.getStatus().name()
+                createdConsultation.getStatus().name(),
+                createdConsultation.getPatient().getEmail(),
+                createdConsultation.getPatient().getPhone()
         ));
 
         return new ConsultationDTO(createdConsultation);
@@ -105,11 +105,11 @@ public class ConsultationControllerImpl implements ConsultationController {
         sendNotificationToQueueCase.run(new NotificationDTO(
                 "Sua consulta foi atualizada!",
                 updatedConsultation.getPatient().getName(),
-                updatedConsultation.getPatient().getEmail(),
-                updatedConsultation.getPatient().getPhone(),
                 updatedConsultation.getDoctor().getName(),
                 updatedConsultation.getDateTime(),
-                updatedConsultation.getStatus().name()
+                updatedConsultation.getStatus().name(),
+                updatedConsultation.getPatient().getEmail(),
+                updatedConsultation.getPatient().getPhone()
         ));
 
         return new ConsultationDTO(updatedConsultation);
@@ -127,11 +127,11 @@ public class ConsultationControllerImpl implements ConsultationController {
         sendNotificationToQueueCase.run(new NotificationDTO(
                 "A situação da sua consulta foi alterada!",
                 updatedConsultation.getPatient().getName(),
-                updatedConsultation.getPatient().getEmail(),
-                updatedConsultation.getPatient().getPhone(),
                 updatedConsultation.getDoctor().getName(),
                 updatedConsultation.getDateTime(),
-                updatedConsultation.getStatus().name()
+                updatedConsultation.getStatus().name(),
+                updatedConsultation.getPatient().getEmail(),
+                updatedConsultation.getPatient().getPhone()
         ));
 
         return new ConsultationDTO(updatedConsultation);
