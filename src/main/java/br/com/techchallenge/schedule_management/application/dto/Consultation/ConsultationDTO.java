@@ -1,4 +1,4 @@
-    package br.com.techchallenge.schedule_management.application.dto.Consultation;
+package br.com.techchallenge.schedule_management.application.dto.Consultation;
 
 import br.com.techchallenge.schedule_management.application.domain.entity.ConsultationDomain;
 import br.com.techchallenge.schedule_management.application.dto.Doctor.DoctorDTO;

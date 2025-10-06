@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 8080
 
 spring:
   application:
@@ -23,3 +23,9 @@ spring:
     port: ${RABBIT_PORT}
     username: ${RABBIT_USER}
     password: ${RABBIT_PASSWORD}
+
+jwt:
+  private:
+    key: classpath:app.key
+  public:
+    key: classpath:app.pub

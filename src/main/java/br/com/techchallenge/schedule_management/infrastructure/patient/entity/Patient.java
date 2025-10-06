@@ -1,6 +1,7 @@
 package br.com.techchallenge.schedule_management.infrastructure.patient.entity;
 
 import br.com.techchallenge.schedule_management.infrastructure.address.entity.Address;
+import br.com.techchallenge.schedule_management.infrastructure.authentication.entity.Credentials;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,5 +30,8 @@ public class Patient {
     private Address address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Credentials credentials;
 
 }
