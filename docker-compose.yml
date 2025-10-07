@@ -1,5 +1,10 @@
 version: "3.9"
 
+networks:
+  tech-net:
+    external: true
+    name: tech-net
+
 services:
   mysql:
     image: mysql
@@ -8,12 +13,8 @@ services:
       - .env.mysql
     volumes:
       - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
-
-  rabbit:
-    image: rabbitmq
-    container_name: tech-challenge-rabbit
-    env_file:
-      - .env.rabbit
+    networks:
+      - tech-net
 
   application:
     build:
@@ -26,4 +27,5 @@ services:
       - .env
     depends_on:
       - mysql
-      - rabbit
+    networks:
+      - tech-net
