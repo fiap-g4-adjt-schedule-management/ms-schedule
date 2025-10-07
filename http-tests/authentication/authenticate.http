@@ -2,6 +2,6 @@ POST {{BASE_URL}}/auth
 Content-Type: application/json
 
 {
-    "email": "nurse1@example.com",
+    "email": "doctor1@example.com",
     "password": "123456"
 }
