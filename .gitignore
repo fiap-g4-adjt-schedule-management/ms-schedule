@@ -33,7 +33,6 @@ build/
 .vscode/
 
 .env
-.env.rabbit
 .env.mysql
 
 *.pub
