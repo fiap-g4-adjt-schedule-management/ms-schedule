@@ -1,0 +1,35 @@
+version: "3.9"
+
+networks:
+  tech-net:
+    external: true
+
+services:
+  mysql:
+    image: mysql
+    container_name: ms-schedule-db
+    env_file:
+      - .env.mysql
+    volumes:
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
+    networks: [tech-net]
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms-schedule
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks: [tech-net]
