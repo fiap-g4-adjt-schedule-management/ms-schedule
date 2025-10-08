@@ -1,0 +1,566 @@
+{
+	"info": {
+		"_postman_id": "372ef2d0-7785-4517-8c97-2df1f1243838",
+		"name": "ms-schedule",
+		"description": "Collection alinhada exatamente aos endpoints informados, passando por API Gateway.\n\nPrefixo configurável: {{BASE_URL}}  \nEndpoints:  \nGET /consultation  \nGET /consultation/{id}  \nGET /consultation/by-doctor/{id}  \nGET /consultation/by-patient/{id}  \nPOST /consultation  \nPUT /consultation/{id}  \nPATCH/consultation/update-status/{id}  \nPOST /auth  \nPOST /auth/token-validator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44126112",
+		"_collection_link": "https://rayssecutrim.postman.co/workspace/Raysse-Cutrim's-Workspace~cb98d9a5-ef9f-4295-8fd7-f62edd8ca6e3/collection/44126112-372ef2d0-7785-4517-8c97-2df1f1243838?action=share&source=collection_link&creator=44126112"
+	},
+	"item": [
+		{
+			"name": "A) Auth • Login (/auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/auth",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"auth"
+					]
+				},
+				"description": "Gera token a partir de { email, password }."
+			},
+			"response": []
+		},
+		{
+			"name": "A.1) Auth • Validar Token (/auth/token-validator)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/auth/token-validator",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"auth",
+						"token-validator"
+					]
+				},
+				"description": "Valida o token atual e retorna infos do usuário."
+			},
+			"response": []
+		},
+		{
+			"name": "B) Consultation • Criar (/consultation)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nurseId\": 1,\n  \"doctorId\": 2,\n  \"patientId\": 1,\n  \"dateTime\": \"2025-10-05T14:30:00\",\n  \"reason\": \"Retorno de avaliação\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/consultation",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation"
+					]
+				},
+				"description": "Cria uma consulta."
+			},
+			"response": []
+		},
+		{
+			"name": "C) Consultation • Buscar por ID (/consultation/{id})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('GET /consultation/{id} → 200', function(){ pm.response.to.have.status(200); });",
+							"pm.test('Corpo possui id', function(){ pm.expect(pm.response.json()).to.have.property('id'); });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/consultation/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation",
+						"1"
+					]
+				},
+				"description": "Busca uma consulta por ID."
+			},
+			"response": []
+		},
+		{
+			"name": "D) Consultation • Listar todas (paginação) (/consultation)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('GET /consultation → 200', function(){ pm.response.to.have.status(200); });",
+							"pm.test('Estrutura de paginação', function(){",
+							"  const j = pm.response.json();",
+							"  pm.expect(j).to.have.keys(['items','page','size','totalItems']);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/consultation?page={{page}}&size={{size}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page}}"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}"
+						}
+					]
+				},
+				"description": "Lista todas com paginação (PageResult)."
+			},
+			"response": []
+		},
+		{
+			"name": "E) Consultation • Por médico (paginação) (/consultation/by-doctor/{id})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('GET /consultation → 200', function(){ pm.response.to.have.status(200); });",
+							"pm.test('Estrutura de paginação', function(){",
+							"  const j = pm.response.json();",
+							"  pm.expect(j).to.have.keys(['items','page','size','totalItems']);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/consultation/by-doctor/{{doctorId}}?page={{page}}&size={{size}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation",
+						"by-doctor",
+						"{{doctorId}}"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page}}"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}"
+						}
+					]
+				},
+				"description": "Busca todas de um médico com paginação."
+			},
+			"response": []
+		},
+		{
+			"name": "F) Consultation • Por paciente (paginação) (/consultation/by-patient/{id})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('GET /consultation → 200', function(){ pm.response.to.have.status(200); });",
+							"pm.test('Estrutura de paginação', function(){",
+							"  const j = pm.response.json();",
+							"  pm.expect(j).to.have.keys(['items','page','size','totalItems']);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/consultation/by-patient/{{patientId}}?page={{page}}&size={{size}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation",
+						"by-patient",
+						"{{patientId}}"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page}}"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}"
+						}
+					]
+				},
+				"description": "Busca todas de um paciente com paginação."
+			},
+			"response": []
+		},
+		{
+			"name": "G) Consultation • Atualizar (/consultation/{id})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('PUT /consultation/{id} → 200', function(){ pm.response.to.have.status(200); });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nurseId\": 1,\n  \"doctorId\": 1,\n  \"patientId\": 1,\n  \"dateTime\": \"2025-10-13T00:35:19Z\",\n  \"reason\": \"Ajuste de horário\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/consultation/{{consultationId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation",
+						"{{consultationId}}"
+					]
+				},
+				"description": "Atualiza uma consulta existente."
+			},
+			"response": []
+		},
+		{
+			"name": "H) Consultation • Atualizar status (/consultation/update-status/{id})",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"CANCELED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/consultation/update-status/{{consultationId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation",
+						"update-status",
+						"{{consultationId}}"
+					]
+				},
+				"description": "Atualiza o status da consulta (string)."
+			},
+			"response": []
+		},
+		{
+			"name": "I) Consultation • Criar inválido (espera 401)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('POST /consultation inválido → 400', function(){ pm.response.to.have.status(400); });"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"patientId\": \"\",\n  \"doctorId\": \"\",\n  \"dateTime\": \"invalid-date\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/consultation",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"consultation"
+					]
+				},
+				"description": "Testa validações do DTO."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
